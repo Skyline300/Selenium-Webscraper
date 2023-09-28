@@ -13,7 +13,7 @@ options = Options();
 options.add_experimental_option('excludeSwitches', ['enable-logging']);
 commands = {};
 url = "https://track.mydronefleets.com/playback/64fd5648e98213f5d3f5b415";
-s=Service('chromedriver_win32/chromedriver');
+#s=Service('chromedriver_win32/chromedriver');
 driver  = webdriver.Chrome(options=options);
 driver.get(url);
 
@@ -37,9 +37,17 @@ commands["cock"] = _cock
 
 def _login(*args):
     driver.find_element(By.XPATH,'//div/button').click()
+    try: 
+        WebDriverWait(driver,20).until(EC.presence_of_element_located((By.ID,'email_login')));
+    finally: 
+        print("there is a login input")
 
 commands["login"] = _login
 
+def _exit(*args):
+    driver.quit()
+
+commands["exit"] = _exit
 
 def repl():
     while True:
