@@ -24,16 +24,12 @@ finally:
     res = driver.find_element(By.XPATH,'//div/h4')
     print("the string:")
     print(res.text)
-    
    # driver.quit()
-
 
 
 def _cock(*args):
     print("balls")
 
-
-commands["cock"] = _cock
 
 def _login(*args):
     driver.find_element(By.XPATH,'//div/button').click()
@@ -42,12 +38,14 @@ def _login(*args):
     finally: 
         print("there is a login input")
 
-commands["login"] = _login
 
 def _exit(*args):
     driver.quit()
 
 commands["exit"] = _exit
+commands["cock"] = _cock
+commands["login"] = _login
+
 
 def repl():
     while True:
