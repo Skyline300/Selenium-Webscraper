@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from dotenv import load_dotenv
-
+import time
 
 options = Options();
 options.add_experimental_option('excludeSwitches', ['enable-logging']);
@@ -102,7 +102,17 @@ def insert():
     print(dataDict)
     if os.path.exists("result.csv"):
             temp_df = pd.DataFrame(dataDict, index=[0])
-            temp_df.to_csv('result.csv', mode='a',index=False,header=False)
+            temp_df.to_csv('result.csv', mode='a')
+    else:
+        temp_df = pd.DataFrame(dataDict);
+        temp_df.to_csv('result.csv');
+    time.sleep(0.5)
+    data = driver.find_element(By.XPATH,'//*[@id="map"]/div[2]/div[3]')
+    stopTime = driver.find_element(By.XPATH,'//*[@id="map"]/div[2]/div[2]/div/div[2]/span[2]').text
+    txtData = data.text
+    listData = txtData.split()
+    if (listData[1] != stopTime):
+        insert()
     return
 
 
