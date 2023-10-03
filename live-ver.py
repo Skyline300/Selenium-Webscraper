@@ -104,7 +104,7 @@ def insert():
             temp_df = pd.DataFrame(dataDict, index=[0])
             temp_df.to_csv('result.csv', mode='a')
     else:
-        temp_df = pd.DataFrame(dataDict);
+        temp_df = pd.DataFrame(dataDict, index=[0]);
         temp_df.to_csv('result.csv');
     time.sleep(0.5)
     data = driver.find_element(By.XPATH,'//*[@id="map"]/div[2]/div[3]')
