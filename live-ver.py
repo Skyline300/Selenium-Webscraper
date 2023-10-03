@@ -58,9 +58,8 @@ def _get(*args):
     except:
         print("class not found")
     finally:
-
-        data = driver.find_elements(By.CSS_SELECTOR,'div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-6')
-        print(data[1].text)   
+        insert() 
+       
 
 def _getTime(*args):
     try:
@@ -70,13 +69,38 @@ def _getTime(*args):
     finally:
         print("Item found")
         data = driver.find_element(By.XPATH,'//*[@id="map"]/div[2]/div[3]')
+        stopTime = driver.find_element(By.XPATH,'//*[@id="map"]/div[2]/div[2]/div/div[2]/span[2]')
         txtData = data.text
         listData = txtData.split()
         print(listData[1])
+        print(stopTime.text)
+        print(listData[1] == stopTime.text)
 
 def _exit(*args):
     driver.quit()
     return
+
+def insert():
+
+    time = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[2]')
+    localTime = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[4]')
+    latitude = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[6]')
+    longitude = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[8]')
+    altitude = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[10]')
+    speed = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[12]')
+    acceleration = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[14]')
+    heading = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[16]')
+    vdop = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[24]')
+    hdop = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[26]')
+    roll = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[28]')
+    pitch = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[30]')
+    yaw = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[32]')
+    battery = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[34]')
+    voltage = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[36]')
+    temperature = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[38]')
+    print(roll.text)   
+    return
+
 
 commands["exit"] = _exit
 commands["cock"] = _cock
