@@ -54,7 +54,7 @@ def _login(*args):
 
 def _get(*args):
     try:
-        WebDriverWait(driver,20).until(EC.presence_of_element_located((By.CSS_SELECTOR,'div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-6'))); 
+        WebDriverWait(driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-6'))); 
     except:
         print("class not found")
     finally:
@@ -63,7 +63,7 @@ def _get(*args):
 
 def _getTime(*args):
     try:
-        WebDriverWait(driver,20).until(EC.presence_of_element_located((By.XPATH,'//*[@id="map"]/div[2]/div[3]'))); 
+        WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,'//*[@id="map"]/div[2]/div[3]'))); 
     except:
         print("Item not found")
     finally:
@@ -81,24 +81,28 @@ def _exit(*args):
     return
 
 def insert():
-
-    time = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[2]')
-    localTime = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[4]')
-    latitude = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[6]')
-    longitude = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[8]')
-    altitude = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[10]')
-    speed = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[12]')
-    acceleration = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[14]')
-    heading = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[16]')
-    vdop = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[24]')
-    hdop = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[26]')
-    roll = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[28]')
-    pitch = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[30]')
-    yaw = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[32]')
-    battery = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[34]')
-    voltage = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[36]')
-    temperature = driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[38]')
-    print(roll.text)   
+    dataDict = {
+        "Time" : driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[2]').text,
+        "LocalTime": driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[4]').text,
+        "Latitude":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[6]').text,
+        "Longitude":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[8]').text,
+        "Altitude":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[10]').text,
+        "speed":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[12]').text,
+        "acceleration":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[14]').text,
+        "heading":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[16]').text,
+        "vdop":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[24]').text,
+        "hdop":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[26]').text,
+        "roll":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[28]').text,
+        "pitch":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[30]').text,
+        "yaw":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[32]').text,
+        "battery":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[34]').text,
+        "voltage":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[36]').text,
+        "temperature":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[38]').text
+    }
+    print(dataDict)
+    if os.path.exists("result.csv"):
+            temp_df = pd.DataFrame(dataDict, index=[0])
+            temp_df.to_csv('result.csv', mode='a',index=False,header=False)
     return
 
 
