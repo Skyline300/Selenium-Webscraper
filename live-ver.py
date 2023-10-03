@@ -9,6 +9,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from dotenv import load_dotenv
+
+
 options = Options();
 options.add_experimental_option('excludeSwitches', ['enable-logging']);
 commands = {};
@@ -24,12 +26,12 @@ password = os.environ['password']
 
 print(email)
 print(password)
-try:
-    WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,'//div/button')))
-finally:
-    res = driver.find_element(By.XPATH,'//div/h4')
-    print(res.text)
-   # driver.quit()
+# try:
+#     WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,'//div/button')))
+# finally:
+#     res = driver.find_element(By.XPATH,'//div/h4')
+#     print(res.text)
+#    # driver.quit()
 
 
 def _cock(*args):
@@ -38,6 +40,7 @@ def _cock(*args):
 
 
 def _login(*args):
+    WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,'//div/button')))
     driver.find_element(By.XPATH,'//div/button').click()
     try: 
         WebDriverWait(driver,20).until(EC.presence_of_element_located((By.ID,'email_login')));
@@ -51,12 +54,25 @@ def _login(*args):
 
 def _get(*args):
     try:
-        data = driver.find_element(By.CLASS_NAME,'jss85')
-        print(data.text)
+        WebDriverWait(driver,20).until(EC.presence_of_element_located((By.CSS_SELECTOR,'div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-6'))); 
     except:
         print("class not found")
+    finally:
 
+        data = driver.find_elements(By.CSS_SELECTOR,'div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-6')
+        print(data[1].text)   
 
+def _getTime(*args):
+    try:
+        WebDriverWait(driver,20).until(EC.presence_of_element_located((By.XPATH,'//*[@id="map"]/div[2]/div[3]'))); 
+    except:
+        print("Item not found")
+    finally:
+        print("Item found")
+        data = driver.find_element(By.XPATH,'//*[@id="map"]/div[2]/div[3]')
+        txtData = data.text
+        listData = txtData.split()
+        print(listData[1])
 
 def _exit(*args):
     driver.quit()
@@ -66,6 +82,8 @@ commands["exit"] = _exit
 commands["cock"] = _cock
 commands["login"] = _login
 commands["get"] = _get
+commands["timing"] = _getTime
+
 
 def repl():
     while True:
