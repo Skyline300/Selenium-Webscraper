@@ -14,7 +14,8 @@ import time
 options = Options();
 options.add_experimental_option('excludeSwitches', ['enable-logging']);
 commands = {};
-url = "https://track.mydronefleets.com/playback/64fd5648e98213f5d3f5b415";
+# https://track.mydronefleets.com/playback/6508c8dce98213f5d3f6c858
+url = "https://track.mydronefleets.com/playback/65179e60e98213f5d3f84e2f";
 #s=Service('chromedriver_win32/chromedriver');
 driver  = webdriver.Chrome(options=options);
 driver.get(url);
@@ -54,10 +55,11 @@ def _login(*args):
 
 def _get(*args):
     try:
-        WebDriverWait(driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-6'))); 
+        WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,'//*[@id="map"]/div[2]/div[1]/div/button[1]'))); 
     except:
         print("class not found")
     finally:
+        driver.find_element(By.XPATH, '//*[@id="map"]/div[2]/div[1]/div/button[1]').click()
         insert() 
        
 
@@ -99,13 +101,14 @@ def insert():
         "voltage":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[36]').text,
         "temperature":driver.find_element(By.XPATH,'//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div[3]/div[38]').text
     }
+    title = driver.find_element(By.XPATH, '//*[@id="root"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/h6').text
     print(dataDict)
-    if os.path.exists("result.csv"):
+    if os.path.exists(f"{title}.csv"):
             temp_df = pd.DataFrame(dataDict, index=[0])
-            temp_df.to_csv('result.csv', mode='a')
+            temp_df.to_csv(f'{title}.csv', mode='a',header=False)
     else:
         temp_df = pd.DataFrame(dataDict, index=[0]);
-        temp_df.to_csv('result.csv');
+        temp_df.to_csv(f'{title}.csv');
     time.sleep(0.5)
     data = driver.find_element(By.XPATH,'//*[@id="map"]/div[2]/div[3]')
     stopTime = driver.find_element(By.XPATH,'//*[@id="map"]/div[2]/div[2]/div/div[2]/span[2]').text
